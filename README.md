@@ -4,7 +4,7 @@
 
 Modelo de Processos utilizado pelo time:
 - Metodologia SCRUM / Kanban
-- Entregas 
+- Sprint Planning, Sprint Review quinzenais
 - Reuniões assíncronas terças e quintas a noite
 - Reuniões síncronas sábados das 10:00 ás 11:00 (Weekly)
 
