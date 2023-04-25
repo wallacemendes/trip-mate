@@ -6,14 +6,17 @@ Modelo de Processos utilizado pelo time:
 - Metodologia SCRUM / Kanban
 - Sprint Planning, Sprint Review quinzenais
 - Reuniões assíncronas terças e quintas a noite
-- Reuniões síncronas sábados das 10:00 ás 11:00 (Weekly)
+- Reuniões síncronas sábados das 10:00 ás 11:00 (Weekly) via Google Meet
 
 
 Ferramentas utilizadas:
+
+- Google Meet
 - Miro 
 - LucidChart
 - Jira
 - Github
+- VSCode
 
 Stack de desenvolvimento (a definir)
 
