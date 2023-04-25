@@ -1,2 +1,2 @@
 # trip-mate
-Sistema organizador de viagens
+Sistema organizador de viagens: um sistema que permite ao usuário incluir e gerenciar atividades relacionadas a uma viagem, ou seja: criar uma nova viagem, organizar o cronograma de atividades a serem feitas (de lazer/trabalho) durante o período definido pelo usuário. O sistema conterá também orçamento geral e gestão de gastos ao longo da viagem, com possibilidade de compartilhamento da viagem.
