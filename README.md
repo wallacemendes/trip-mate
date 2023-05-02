@@ -19,7 +19,8 @@ Ferramentas utilizadas:
 - VSCode
 
 Stack de desenvolvimento:
-Front-end: React (JavaScript)
-Back-end: Laravel (PHP)
+
+= Front-end: React (JavaScript)
+- Back-end: Laravel (PHP)
 
 Projeto criado para a Disciplina de Engenharia de Software II no semestre 2023.2 da Universidade Federal da Bahia, criado por Adriana Silva, Murilo Vicente e Wallace Mendes 
