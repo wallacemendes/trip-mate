@@ -4,7 +4,7 @@
 
 Modelo de Processos utilizado pelo time:
 - Metodologia SCRUM / Kanban
-- Sprint Planning, Sprint Review quinzenais
+- Reuniões de Sprint Planning e Sprint Review quinzenais
 - Reuniões assíncronas terças e quintas a noite
 - Reuniões síncronas sábados das 10:00 ás 11:00 (Weekly) via Google Meet
 
@@ -18,6 +18,8 @@ Ferramentas utilizadas:
 - Github
 - VSCode
 
-Stack de desenvolvimento (a definir)
+Stack de desenvolvimento:
+Front-end: React (JavaScript)
+Back-end: Laravel (PHP)
 
 Projeto criado para a Disciplina de Engenharia de Software II no semestre 2023.2 da Universidade Federal da Bahia, criado por Adriana Silva, Murilo Vicente e Wallace Mendes 
