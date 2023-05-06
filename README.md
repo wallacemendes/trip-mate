@@ -8,6 +8,8 @@
 - Reuniões assíncronas terças e quintas a noite
 - Reuniões síncronas sábados das 10:00 ás 11:00 (Weekly) via Google Meet
 
+### Entrega 01: [Histórias de Usuário](https://docs.google.com/document/d/14QWPrMIQy--UhU-G_jVXjSDEhRjB-mRFkxPQ74g8CpM/edit?usp=sharing)
+
 
 # 🛠 Ferramentas utilizadas:
 
