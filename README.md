@@ -10,7 +10,7 @@
 - Reuniões síncronas sábados das 10:00 ás 11:00 (Weekly) via Google Meet
 
 ### Entrega 01: [Histórias de Usuário](https://docs.google.com/document/d/14QWPrMIQy--UhU-G_jVXjSDEhRjB-mRFkxPQ74g8CpM/edit?usp=sharing)
-### Entrega 02: [Diagrama de Classes](https://drive.google.com/file/d/1qv87CoRT66J5m1p-ipK63F5ai-ExqZWd/view?usp=sharing) [Casos de Uso](https://drive.google.com/file/d/1rD1WxEWqAvx09jSWH_4SqAT2m-7clLLk/view?usp=sharing)
+### Entrega 02: [Diagrama de Classes](https://drive.google.com/file/d/1qv87CoRT66J5m1p-ipK63F5ai-ExqZWd/view?usp=sharing) | [Casos de Uso](https://drive.google.com/file/d/1rD1WxEWqAvx09jSWH_4SqAT2m-7clLLk/view?usp=sharing)
 ### Bônus: [Jornada de Usuário](https://miro.com/app/board/uXjVML_a0es=/)
 
 # 🛠 Ferramentas utilizadas:
