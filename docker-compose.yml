@@ -1,0 +1,56 @@
+version: '3.7'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: db
+      DB_DATABASE: app_db
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/app/backend
+    depends_on:
+      - db
+    networks:
+      - app
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    tty: true
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend:/app/frontend
+    depends_on:
+      - backend
+    networks:
+      - app
+
+  db:
+    image: mysql:8.0
+    container_name: db
+    tty: true
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: 'app_db'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    volumes:
+      - dbdata:/var/lib/mysql/
+    networks:
+      - app
+
+networks:
+  app:
+    driver: bridge
+
+volumes:
+  dbdata:
+    driver: local
