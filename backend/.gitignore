@@ -17,5 +17,4 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-README.md
 **/*.blade.php

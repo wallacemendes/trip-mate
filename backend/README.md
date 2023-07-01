@@ -1,0 +1,22 @@
+## Visão Geral dos Endpoints da API
+
+- **Registrar Usuário**: `/register` (POST) - Registrar um novo usuário.
+- **Login**: `/login` (POST) - Autenticar o usuário e gerar um token.
+- **Compartilhar uma Viagem**: `/sharing/invite` (POST) - Compartilhar uma viagem gerando um token de compartilhamento.
+- **Aceitar um Convite para a Viagem**: `/sharing/accept-invite` (POST) - Aceitar um convite para uma viagem compartilhada.
+- **Excluir o Token de Compartilhamento da Viagem**: `/sharing/delete-token` (DELETE) - Excluir o token de compartilhamento de uma viagem.
+- **Obter Todas as Viagens**: `/trips` (GET) - Recuperar todas as viagens.
+- **Criar uma Viagem**: `/trips` (POST) - Criar uma nova viagem.
+- **Obter uma Viagem Específica**: `/trips/{trip}` (GET) - Recuperar uma viagem específica.
+- **Atualizar uma Viagem**: `/trips/{trip}` (PUT/PATCH) - Atualizar uma viagem específica.
+- **Excluir uma Viagem**: `/trips/{trip}` (DELETE) - Excluir uma viagem específica.
+- **Obter Todas as Atividades**: `/trips/{trip}/activities` (GET) - Recuperar todas as atividades de uma viagem.
+- **Criar uma Atividade**: `/trips/{trip}/activities` (POST) - Criar uma nova atividade para uma viagem.
+- **Obter uma Atividade Específica**: `/trips/{trip}/activities/{activity}` (GET) - Recuperar uma atividade específica de uma viagem.
+- **Atualizar uma Atividade**: `/trips/{trip}/activities/{activity}` (PUT/PATCH) - Atualizar uma atividade específica.
+- **Excluir uma Atividade**: `/trips/{trip}/activities/{activity}` (DELETE) - Excluir uma atividade específica.
+- **Obter Todas as Despesas**: `/trips/{trip}/activities/{activity}/expenses` (GET) - Recuperar todas as despesas de uma atividade.
+- **Criar uma Despesa**: `/trips/{trip}/activities/{activity}/expenses` (POST) - Criar uma nova despesa para uma atividade.
+- **Obter uma Despesa Específica**: `/trips/{trip}/activities/{activity}/expenses/{expense}` (GET) - Recuperar uma despesa específica de uma atividade.
+- **Atualizar uma Despesa**: `/trips/{trip}/activities/{activity}/expenses/{expense}` (PUT/PATCH) - Atualizar uma despesa específica.
+- **Excluir uma Despesa**: `/trips/{trip}/activities/{activity}/expenses/{expense}` (DELETE) - Excluir uma despesa específica.

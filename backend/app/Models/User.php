@@ -17,8 +17,10 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
     protected $fillable = [
         'name',
+        'lastName',
         'email',
         'password',
     ];
@@ -42,4 +44,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function trips()
+    {
+        return $this->hasMany(Trip::class);
+    }
+
+    public function sharedWithMe()
+    {
+        return $this->belongsToMany(Trip::class, 'shared_users', 'user_id', 'trip_id');
+    }
+
 }
