@@ -1,4 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import api from '../../services/api';
+import './styles.css'
+import Header from '../../components/header/intex';
+import Footer from '../../components/footer/intex';
+import { Route, Router, redirect, useNavigate } from 'react-router-dom';
 
 interface LoginProps {
   email: string;
@@ -10,6 +15,8 @@ const Login: React.FC = () => {
     email: '',
     password: '',
   });
+  const navigate = useNavigate()
+
 
   //Alterar tratamendo do formulário para Formik
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,37 +27,49 @@ const Login: React.FC = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     // Lógica para autenticação do usuário
-    console.log('Login:', loginData);
+    api.post('login', loginData).then(res => {
+      console.log('FEZ LOGIN')
+      localStorage.setItem('token', res.data.token)
+      return navigate('/dashboard')
+    }).catch(err => console.log(err))
   };
 
   return (
-    <div>
-      <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={loginData.email}
-            onChange={handleInputChange}
-            required
-          />
+    <div className='form-box full-width full-height'>
+      <Header />
+      <div className='form-box full-width full-height'>
+        <div className='form-box form-container'>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={loginData.email}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="password">Senha</label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={loginData.password}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className='button-box'>
+              <button type="submit">Login</button>
+            </div>
+          </form>
         </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={loginData.password}
-            onChange={handleInputChange}
-            required
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
+
+      </div>
+      <Footer />
     </div>
   );
 };
