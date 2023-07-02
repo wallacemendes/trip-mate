@@ -6,6 +6,8 @@ import {
 import Login from "./pages/login";
 import Dashboard from "./pages/dashboard";
 import NewTravel from "./pages/new-travel";
+import SeeTravel from "./pages/see-travel/intex";
+import EditTravel from "./pages/edit-travel/intex";
 
 
 const AllRoutes = () => {
@@ -14,6 +16,8 @@ const AllRoutes = () => {
           <Route path="/" element={<Login/>} />
           <Route path="/dashboard" element={<Dashboard/>}/>
           <Route path="/nova-viagem" element={<NewTravel/>} />
+          <Route path="/viagem/:id" element={<SeeTravel/>} />
+          <Route path="/editar-viagem/:id" element={<EditTravel/>} />
         </Routes>
     )
 }
