@@ -220,6 +220,109 @@ Authorization: Bearer generated_token_here
     ]  
     ```
 
+### Obter uma Viagem Específica (sem atividades)
+
+- URL: `/trips/{tripId}`
+- Método: `GET`
+- Descrição: Recuperar uma viagem específica sem as atividades associadas.
+- Corpo da Resposta:
+  - O objeto da viagem com as seguintes propriedades:
+    - `id` (inteiro): O ID da viagem.
+    - `title` (string): O título da viagem.
+    - `startDate` (data): A data de início da viagem.
+    - `endDate` (data): A data de término da viagem.
+    - `location` (string): O local da viagem.
+    - `currency` (string): A moeda usada na viagem.
+    - `budget` (numérico): O orçamento para a viagem.
+    - `userId` (inteiro): O ID do usuário proprietário da viagem.
+- Exemplo:
+  - Solicitação:
+    ```
+    GET /trips/1
+    ```
+  - Resposta:
+    ```json
+    {
+      "id": 1,
+      "title": "Férias de Verão",
+      "startDate": "2023-06-25",
+      "endDate": "2023-07-05",
+      "location": "Resort de Praia",
+      "currency": "USD",
+      "budget": 2000,
+      "userId": 1
+    }
+    ```
+
+### Obter uma Viagem Específica (com atividades)
+
+- URL: `/trips/{tripId}`
+- Método: `GET`
+- Descrição: Recuperar uma viagem específica juntamente com suas atividades associadas.
+- Parâmetros de Consulta:
+  - `include` (opcional, string): Lista separada por vírgulas dos recursos relacionados incluídos. Use `include=activities` para incluir as atividades associadas à viagem.
+- Corpo da Resposta:
+  - O objeto da viagem com as seguintes propriedades:
+    - `id` (inteiro): O ID da viagem.
+    - `title` (string): O título da viagem.
+    - `startDate` (data): A data de início da viagem.
+    - `endDate` (data): A data de término da viagem.
+    - `location` (string): O local da viagem.
+    - `currency` (string): A moeda usada na viagem.
+    - `budget` (numérico): O orçamento para a viagem.
+    - `userId` (inteiro): O ID do usuário proprietário da viagem.
+    - `activities` (array): Um array de objetos de atividades associadas à viagem.
+      - Cada objeto de atividade possui as seguintes propriedades:
+        - `id` (inteiro): O ID da atividade.
+        - `title` (string): O título da atividade.
+        - `date` (data): A data da atividade.
+        - `time` (hora): A hora da atividade.
+        - `description` (string): A descrição da atividade.
+        - `cost` (numérico): O custo total da atividade (soma das despesas).
+        - `budget` (numérico): O orçamento
+
+ para a atividade.
+        - `tripId` (inteiro): O ID da viagem associada à atividade.
+- Exemplo:
+  - Solicitação:
+    ```
+    GET /trips/1?include=activities
+    ```
+  - Resposta:
+    ```json
+    {
+      "id": 1,
+      "title": "Férias de Verão",
+      "startDate": "2023-06-25",
+      "endDate": "2023-07-05",
+      "location": "Resort de Praia",
+      "currency": "USD",
+      "budget": 2000,
+      "userId": 1,
+      "activities": [
+        {
+          "id": 1,
+          "title": "Dia na Praia",
+          "date": "2023-06-27",
+          "time": "10:00:00",
+          "description": "Aproveite um dia relaxante na praia",
+          "cost": 80,
+          "budget": 100,
+          "tripId": 1
+        },
+        {
+          "id": 2,
+          "title": "Passeio de Caminhada",
+          "date": "2023-06-30",
+          "time": "09:00:00",
+          "description": "Explore as montanhas próximas",
+          "cost": 50,
+          "budget": 80,
+          "tripId": 1
+        }
+      ]
+    }
+    ```
 
 
 ### Criar uma Viagem
