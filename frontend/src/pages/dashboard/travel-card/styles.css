@@ -1,0 +1,14 @@
+.travel-card{
+    padding: 1rem;
+    border: 8px solid #FD4659;
+    border-radius: 8px;
+    width: 15rem;
+    justify-content: space-between;
+    height: 10rem;
+    transition: transform .2s;
+    cursor: pointer;
+}
+
+.travel-card:hover{
+ transform: scale(1.2);
+}

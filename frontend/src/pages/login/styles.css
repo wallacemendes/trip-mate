@@ -40,7 +40,7 @@
     border-radius: 8px;
     width: 20rem;
     justify-content: space-between;
-    height: 15rem;
+    min-height: 15rem;
   }
 
   .form-box button[type="submit"] {
