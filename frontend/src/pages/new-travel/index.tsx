@@ -5,6 +5,7 @@ import { TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 interface FormProps{
     title:string,
@@ -36,7 +37,6 @@ const NewTravel: React.FC = () => {
             startDate: new Date(formData.startDate).toISOString().slice(0,10),
             endDate: new Date(formData.endDate).toISOString().slice(0,10)
         }
-        // Lógica para autenticação do usuário
         api.post('trips', form ).then((res) => {
             console.log(res.data);
             return navigate('/dashboard')
@@ -66,15 +66,15 @@ const NewTravel: React.FC = () => {
             <div>
               <label htmlFor="startDate">Data de Ida</label>
               <DatePicker 
-               defaultValue={formData.startDate}
-               onChange={(event) => setFormData({...formData, startDate: `${event}`})}
+               value={dayjs(formData.startDate)}
+               onChange={(event: any) => setFormData({...formData, startDate: `${event}`})}
               />
             </div>
             <div>
               <label htmlFor="endDate">Data de Volta</label>
               <DatePicker 
-               defaultValue={formData.startDate}
-               onChange={(event) => setFormData({...formData, endDate: `${event}`})}
+               value={dayjs(formData.endDate)}
+               onChange={(event: any) => setFormData({...formData, endDate: `${event}`})}
               />
             </div>
             <div>

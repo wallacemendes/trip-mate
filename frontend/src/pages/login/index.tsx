@@ -4,6 +4,7 @@ import './styles.css'
 import Header from '../../components/header/intex';
 import Footer from '../../components/footer/intex';
 import { Route, Router, redirect, useNavigate } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';
 
 interface LoginProps {
   email: string;
@@ -11,6 +12,7 @@ interface LoginProps {
 }
 
 const Login: React.FC = () => {
+  const [isLoading, setLoading] = useState<boolean>(false)
   const [loginData, setLoginData] = useState<LoginProps>({
     email: '',
     password: '',
@@ -27,6 +29,7 @@ const Login: React.FC = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     // Lógica para autenticação do usuário
+    setLoading(true)
     api.post('login', loginData).then(res => {
       console.log('FEZ LOGIN')
       localStorage.setItem('token', res.data.token)
@@ -37,38 +40,40 @@ const Login: React.FC = () => {
   return (
     <div className='form-box full-width full-height'>
       <Header />
-      <div className='form-box full-width full-height'>
-        <div className='form-box form-container'>
-          <form onSubmit={handleSubmit}>
-            <div>
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={loginData.email}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="password">Senha</label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={loginData.password}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
-            <div className='button-box'>
-              <button type="submit">Login</button>
-            </div>
-          </form>
-        </div>
+      {isLoading ? <div className='form-box full-width full-height'><div className="full-width flex-center"><CircularProgress /></div></div> : (
+        <div className='form-box full-width full-height'>
+          <div className='form-box form-container'>
+            <form onSubmit={handleSubmit}>
+              <div>
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={loginData.email}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="password">Senha</label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={loginData.password}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+              <div className='button-box'>
+                <button type="submit">Login</button>
+              </div>
+            </form>
+          </div>
 
-      </div>
+        </div>
+      )}
       <Footer />
     </div>
   );

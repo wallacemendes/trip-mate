@@ -3,7 +3,7 @@ import './styles.css'
 import Logo from '../../assets/clean_logo.png'
 import Header from '../../components/header/intex';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { TextField } from '@mui/material';
+import { CircularProgress, TextField } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../services/api';
 import dayjs from 'dayjs';
@@ -18,8 +18,8 @@ interface FormProps {
 }
 
 const EditTravel: React.FC = () => {
-    
-    const {id} = useParams();
+
+    const { id } = useParams();
 
 
     const navigate = useNavigate()
@@ -43,7 +43,7 @@ const EditTravel: React.FC = () => {
             })
             setLoading(false)
         })
-    } , [id])
+    }, [id])
 
 
     const handleSubmit = (event: React.FormEvent) => {
@@ -53,8 +53,10 @@ const EditTravel: React.FC = () => {
             startDate: new Date(formData.startDate).toISOString().slice(0, 10),
             endDate: new Date(formData.endDate).toISOString().slice(0, 10)
         }
+        setLoading(true)
         api.put(`trips/${id}`, form).then((res) => {
             console.log(res.data);
+            setLoading(false)
             return navigate('/viagem/' + id)
         })
             .catch(err => console.log(err))
@@ -66,69 +68,69 @@ const EditTravel: React.FC = () => {
             <Header />
             <div className='create-travel-box'>
                 <h2>Editar viagem</h2>
-                {isLoading ? <h2>Carregando...</h2> : (
-                                    <div className='form-box form-container wider-trav'>
-                                    <form onSubmit={handleSubmit}>
-                                        <div>
-                                            <label htmlFor="email">Título</label>
-                                            <TextField
-                                                id="title"
-                                                name="title"
-                                                defaultValue={formData.title}
-                                                onChange={(event) => setFormData({ ...formData, title: event.target.value })}
-                                                required
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="startDate">Data de Ida</label>
-                                            <DatePicker
-                                                defaultValue={dayjs(formData.startDate)}
-                                                onChange={(event) => setFormData({ ...formData, startDate: `${event}` })}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="endDate">Data de Volta</label>
-                                            <DatePicker
-                                                defaultValue={dayjs(formData.startDate)}
-                                                onChange={(event) => setFormData({ ...formData, endDate: `${event}` })}
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="location">Localização</label>
-                                            <TextField
-                                                id="location"
-                                                name="location"
-                                                defaultValue={formData.location}
-                                                onChange={(event) => setFormData({ ...formData, location: event.target.value })}
-                                                required
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="currency">Moeda Local</label>
-                                            <TextField
-                                                id="currency"
-                                                name="currency"
-                                                defaultValue={formData.currency}
-                                                onChange={(event) => setFormData({ ...formData, currency: event.target.value })}
-                                                required
-                                            />
-                                        </div>
-                                        <div>
-                                            <label htmlFor="budget">Orçamento</label>
-                                            <TextField
-                                                id="budget"
-                                                name="budget"
-                                                defaultValue={formData.budget}
-                                                onChange={(event) => setFormData({ ...formData, budget: event.target.value })}
-                                                required
-                                            />
-                                        </div>
-                                        <div className='button-box'>
-                                            <button type="submit">Salvar</button>
-                                        </div>
-                                    </form>
-                                </div>
-                      )}
+                {isLoading ? <div className="full-width flex-center"><CircularProgress /></div> : (
+                    <div className='form-box form-container wider-trav'>
+                        <form onSubmit={handleSubmit}>
+                            <div>
+                                <label htmlFor="email">Título</label>
+                                <TextField
+                                    id="title"
+                                    name="title"
+                                    defaultValue={formData.title}
+                                    onChange={(event) => setFormData({ ...formData, title: event.target.value })}
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="startDate">Data de Ida</label>
+                                <DatePicker
+                                    defaultValue={dayjs(formData.startDate)}
+                                    onChange={(event: any) => setFormData({ ...formData, startDate: `${event}` })}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="endDate">Data de Volta</label>
+                                <DatePicker
+                                    defaultValue={dayjs(formData.startDate)}
+                                    onChange={(event: any) => setFormData({ ...formData, endDate: `${event}` })}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="location">Localização</label>
+                                <TextField
+                                    id="location"
+                                    name="location"
+                                    defaultValue={formData.location}
+                                    onChange={(event) => setFormData({ ...formData, location: event.target.value })}
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="currency">Moeda Local</label>
+                                <TextField
+                                    id="currency"
+                                    name="currency"
+                                    defaultValue={formData.currency}
+                                    onChange={(event) => setFormData({ ...formData, currency: event.target.value })}
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="budget">Orçamento</label>
+                                <TextField
+                                    id="budget"
+                                    name="budget"
+                                    defaultValue={formData.budget}
+                                    onChange={(event) => setFormData({ ...formData, budget: event.target.value })}
+                                    required
+                                />
+                            </div>
+                            <div className='button-box'>
+                                <button type="submit">Salvar</button>
+                            </div>
+                        </form>
+                    </div>
+                )}
 
             </div>
         </div>

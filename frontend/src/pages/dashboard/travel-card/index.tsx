@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css'
 import Logo from '../../assets/clean_logo.png'
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export interface CardProps {
     id: number,
@@ -17,7 +17,6 @@ export interface CardProps {
 const TravelCard = (travel: CardProps): JSX.Element  => {
 
     const navigate = useNavigate()
-    const [searchParams, setSearchParams] = useSearchParams();
 
     function formatDate(date: string){
         const dt = date.split('-').reverse().join('/');
@@ -25,7 +24,6 @@ const TravelCard = (travel: CardProps): JSX.Element  => {
     }
 
     function navigateToTravel(){
-        setSearchParams(`${travel.id}`)
         return navigate(`/viagem/${travel.id}`)
 
     }

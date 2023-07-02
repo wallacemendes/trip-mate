@@ -15,3 +15,17 @@
     text-align: center;
     color: #FD4659;
   }
+
+  .see-travel .button-box{
+    display: flex;
+    gap: 1rem;
+  }
+
+  .travel-board{
+    width: 95vw;
+  }
+
+  .travel-scheduler div:first-child{
+    width: 100%;
+    overflow-x: hidden;
+  }
