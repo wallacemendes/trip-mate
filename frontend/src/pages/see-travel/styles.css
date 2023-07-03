@@ -24,6 +24,11 @@
   .travel-board{
     width: 95vw;
   }
+  .flex-gap{
+    display: flex;
+    gap:1rem;
+    justify-content: flex-start;
+  }
 
   .travel-scheduler div:first-child{
     width: 100%;

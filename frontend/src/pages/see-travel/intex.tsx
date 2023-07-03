@@ -16,6 +16,7 @@ const SeeTravel: React.FC = () => {
     const [isLoading, setLoading] = useState<boolean>(true)
     const [isOpenModal, setOpenModal] = useState<boolean>(false)
     const [selectedActivity, setSelected] = useState<number>(0)
+    const [allCost, setAllCost] = useState<any>()
 
     const { id } = useParams()
 
@@ -35,6 +36,9 @@ const SeeTravel: React.FC = () => {
         setLoading(true)
         api.get(`/trips/${id}/activities`).then(res => {
             console.log(res.data.data)
+            let cost = 0;
+            res.data.data.forEach((item: any) => cost += item.cost)
+            setAllCost(cost)
             setActivities(res.data.data.map((item: any) => {
                 const date = new Date(`${item.date} ${item.time}`)
                 return {
@@ -51,6 +55,8 @@ const SeeTravel: React.FC = () => {
             setActivities([])
             setLoading(false)
         })
+
+        //despesas
     }, [id, isOpenModal])
 
     function navigateNewTravel() {
@@ -79,9 +85,15 @@ const SeeTravel: React.FC = () => {
                 <div className='flex-center'>
                     <h2>Atividades da viagem</h2>
                 </div>
+                <div>
                 <div className='button-box'>
                     <Button onClick={navigateNewTravel} variant="outlined">Editar viagem</Button>
                     <Button onClick={openModalNewActivity} variant="outlined">Criar atividade</Button>
+                </div>
+                <div className='flex-gap'>
+                    <h3>Despesa total:</h3>
+                    <h3>${allCost}</h3>
+                </div>
                 </div>
                 {!isLoading && activities.length > 0 ? (
                     <div className='travel-scheduler'>

@@ -1,3 +1,18 @@
 .modal-activity .button-box{
     margin-top: 1rem;
 }
+
+.gap{
+    display: flex;
+   justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.expense-box{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.expense-box p{
+    color:#32BF84;
+}
