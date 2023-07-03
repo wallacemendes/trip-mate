@@ -33,7 +33,7 @@ const ModalActivity = (props: ModalProps): JSX.Element => {
         if (props.id !== 0) {
             setLoading(true);
             api.get(`trips/${props.tripId}/activities/${props.id}`).then(res => {
-                setFormData(res.data.data)
+                setFormData({...res.data.data,time:res.data.data.time.slice(0,5)})
                 setLoading(false)
                 setFormExpense(res.data.data.cost)
             })
