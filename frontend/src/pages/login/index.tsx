@@ -5,6 +5,7 @@ import Header from '../../components/header/intex';
 import Footer from '../../components/footer/intex';
 import { Route, Router, redirect, useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
+import {toast, Toaster} from 'react-hot-toast'
 
 interface LoginProps {
   email: string;
@@ -34,12 +35,20 @@ const Login: React.FC = () => {
       console.log('FEZ LOGIN')
       localStorage.setItem('token', res.data.token)
       return navigate('/dashboard')
-    }).catch(err => console.log(err))
+    }).catch(err => {
+      toast.error("Não foi possível autenticar esse usuário")
+      console.log(err);
+      setLoading(false);
+    })
   };
 
   return (
     <div className='form-box full-width full-height'>
       <Header />
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
       {isLoading ? <div className='form-box full-width full-height'><div className="full-width flex-center"><CircularProgress /></div></div> : (
         <div className='form-box full-width full-height'>
           <div className='form-box form-container'>
@@ -68,6 +77,9 @@ const Login: React.FC = () => {
               </div>
               <div className='button-box'>
                 <button type="submit">Login</button>
+              </div>
+              <div className="no-account">
+                <p>Ainda não possui conta? Cadastre-se</p>
               </div>
             </form>
           </div>
