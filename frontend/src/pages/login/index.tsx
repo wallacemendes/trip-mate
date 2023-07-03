@@ -32,8 +32,8 @@ const Login: React.FC = () => {
     // Lógica para autenticação do usuário
     setLoading(true)
     api.post('login', loginData).then(res => {
-      console.log('FEZ LOGIN')
       localStorage.setItem('token', res.data.token)
+      localStorage.setItem('userName', res.data.user.name)
       return navigate('/dashboard')
     }).catch(err => {
       toast.error("Não foi possível autenticar esse usuário")

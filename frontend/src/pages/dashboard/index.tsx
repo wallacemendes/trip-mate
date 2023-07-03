@@ -5,6 +5,8 @@ import { Button, CircularProgress } from '@mui/material';
 import api from '../../services/api';
 import TravelCard, { CardProps } from './travel-card';
 import { useNavigate } from 'react-router-dom';
+import { toast, Toaster } from 'react-hot-toast';
+
 
 const Dashboard: React.FC = () => {
 
@@ -19,6 +21,11 @@ const Dashboard: React.FC = () => {
             console.log(res.data)
             setTrips(res.data.data)
             setIsLoading(false)
+        }).catch(err => {
+            console.log(err);
+            setTrips([]);
+            setIsLoading(false);
+            toast.error("Ocorreu um erro ao buscar viagems")
         })
     }, [])
 
@@ -28,7 +35,11 @@ const Dashboard: React.FC = () => {
 
     return (
         <div className='main-dashboard'>
-            <Header></Header>
+            <Header />
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
             {isLoading ? <div className="full-width flex-center"><CircularProgress /></div> : (
                 <div className='dashboard-container'>
                     <div className='flex-center'>

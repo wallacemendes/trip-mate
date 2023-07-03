@@ -7,6 +7,7 @@ import { CircularProgress, TextField } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../services/api';
 import dayjs from 'dayjs';
+import { toast, Toaster } from 'react-hot-toast';
 
 interface FormProps {
     title: string,
@@ -42,7 +43,9 @@ const EditTravel: React.FC = () => {
                 ...res.data.data,
             })
             setLoading(false)
-        })
+        }).catch(err => {
+            setLoading(false)
+            toast.error("Erro ao obter dados da viagem")})
     }, [id])
 
 
@@ -59,13 +62,21 @@ const EditTravel: React.FC = () => {
             setLoading(false)
             return navigate('/viagem/' + id)
         })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err)
+                setLoading(false)
+                toast.error("Não foi possível editar a viagem")
+            })
 
     };
 
     return (
         <div className='edit-travel'>
             <Header />
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
             <div className='create-travel-box'>
                 <h2>Editar viagem</h2>
                 {isLoading ? <div className="full-width flex-center"><CircularProgress /></div> : (

@@ -1,6 +1,6 @@
 .header-ok{
     background-color: #355993;
-    width: 100%;
+    width: 93%;;
     padding: 1.5rem  3rem;   
     margin-bottom: 2rem; 
     cursor: pointer;
@@ -15,4 +15,17 @@
     margin-bottom: 20px;
     text-align: center;
     color: #707070;
+  }
+
+  .flex-left{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .flex-left img{
+    width: 10% !important;
+  }
+  .flex-left p{
+    color: #FEFEFF;
   }

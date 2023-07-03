@@ -7,6 +7,9 @@ import { Box, Button, CircularProgress, Modal } from '@mui/material';
 import { Scheduler } from '@aldabil/react-scheduler';
 import { ptBR } from 'date-fns/locale';
 import ModalActivity from '../../components/create-edit-activity/indext';
+import { toast, Toaster } from 'react-hot-toast';
+
+
 
 const SeeTravel: React.FC = () => {
 
@@ -30,7 +33,7 @@ const SeeTravel: React.FC = () => {
         border: '2px solid #000',
         boxShadow: 24,
         p: 4,
-      };
+    };
 
     useEffect(() => {
         setLoading(true)
@@ -51,10 +54,10 @@ const SeeTravel: React.FC = () => {
             console.log(activities)
             setLoading(false);
         })
-        .catch(err => {
-            setActivities([])
-            setLoading(false)
-        })
+            .catch(err => {
+                setActivities([])
+                setLoading(false)
+            })
 
         //despesas
     }, [id, isOpenModal])
@@ -74,26 +77,30 @@ const SeeTravel: React.FC = () => {
         setOpenModal(true)
     }
 
-    function handleClose(){
-        setOpenModal(false)        
+    function handleClose() {
+        setOpenModal(false)
     }
 
     return (
         <div className='see-travel'>
             <Header />
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
             <div className='dashboard-container'>
                 <div className='flex-center'>
                     <h2>Atividades da viagem</h2>
                 </div>
                 <div>
-                <div className='button-box'>
-                    <Button onClick={navigateNewTravel} variant="outlined">Editar viagem</Button>
-                    <Button onClick={openModalNewActivity} variant="outlined">Criar atividade</Button>
-                </div>
-                <div className='flex-gap'>
-                    <h3>Despesa total:</h3>
-                    <h3>${allCost}</h3>
-                </div>
+                    <div className='button-box'>
+                        <Button onClick={navigateNewTravel} variant="outlined">Editar viagem</Button>
+                        <Button onClick={openModalNewActivity} variant="outlined">Criar atividade</Button>
+                    </div>
+                    <div className='flex-gap'>
+                        <h3>Despesa total:</h3>
+                        <h3>${allCost}</h3>
+                    </div>
                 </div>
                 {!isLoading && activities.length > 0 ? (
                     <div className='travel-scheduler'>
@@ -109,7 +116,7 @@ const SeeTravel: React.FC = () => {
                             onEventClick={(event) => editActivity(event.event_id)}
                         />
                     </div>
-                ) : isLoading && <div className="full-width flex-center"><CircularProgress /></div> }
+                ) : isLoading && <div className="full-width flex-center"><CircularProgress /></div>}
                 {!isLoading && activities.length === 0 && <h2>Sem atividades para essa viagem</h2>}
 
             </div>
@@ -121,7 +128,7 @@ const SeeTravel: React.FC = () => {
             >
                 <Box sx={styleModal}>
                     <ModalActivity id={selectedActivity} tripId={Number(id)} handleClose={() => handleClose()} />
-                </Box>                
+                </Box>
             </Modal>
         </div>
     );
