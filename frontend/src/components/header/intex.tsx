@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
     const navigate = useNavigate()
-    const [userName, setName] = useState<string>('Murilo');
+    const [userName, setName] = useState<string>('');
 
     useEffect(() => {
         const name = localStorage.getItem('userName');
@@ -19,7 +19,7 @@ const Header: React.FC = () => {
      }
 
      function verifyLogIn(){
-        return localStorage.getItem('token') != null ? 'flex-left' : '';
+        return localStorage.getItem('userName') != null ? 'flex-left' : '';
      }
 
     return (
