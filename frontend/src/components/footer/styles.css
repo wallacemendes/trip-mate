@@ -1,0 +1,12 @@
+.footer-ok{
+    background-color:#32BF84;
+    width: 100%;
+    padding: 1.5rem  3rem;   
+  }
+  
+  .footer-ok p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #FFFF;
+  }

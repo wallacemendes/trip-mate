@@ -1,0 +1,36 @@
+.header-ok{
+    background-color: #32BF84;
+    width: 100%;
+    padding: 1.5rem  3rem;   
+    margin-bottom: 2rem; 
+  }
+
+  .header-ok img{
+    width: 25%;
+  }
+  
+  .header-ok h2 {
+    font-size: 2.6rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #FD4659;
+  }
+
+  .see-travel .button-box{
+    display: flex;
+    gap: 1rem;
+  }
+
+  .travel-board{
+    width: 95vw;
+  }
+  .flex-gap{
+    display: flex;
+    gap:1rem;
+    justify-content: flex-start;
+  }
+
+  .travel-scheduler div:first-child{
+    width: 100%;
+    overflow-x: hidden;
+  }

@@ -1,21 +1,14 @@
 /* Estilização do formulário de login */
-div {
+.form-box div {
     text-align: center;
-    margin-top: 50px;
   }
-  
-  h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  form {
-    display: inline-block;
+
+  .form-box form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     text-align: left;
-  }
-  
-  div > div {
-    margin-bottom: 15px;
+    height: 100%;
   }
   
   label {
@@ -26,13 +19,33 @@ div {
   
   input[type="email"],
   input[type="password"] {
-    width: 200px;
-    padding: 5px;
+    width: 220px;
+    padding: 0.5rem;
+    border-radius: 8px;
   }
-  
-  button[type="submit"] {
+  .full-width{
+    width: 100%;
+  }
+  .full-height{
+    height: 100vh;
+  }
+   .form-box{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .form-container{
+    padding: 1rem;
+    border: 8px solid #FD4659;
+    border-radius: 8px;
+    width: 20rem;
+    justify-content: space-between;
+    min-height: 15rem;
+  }
+
+  .form-box button[type="submit"] {
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #32BF84;
     color: white;
     border: none;
     border-radius: 4px;

@@ -1,25 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import api from './services/api';
+import AllRoutes from './routes';
+import { BrowserRouter } from 'react-router-dom';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import 'dayjs/locale/pt-br';
 
-function App() {
+function App() { 
+
   return (
+    <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="pt-br">
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <AllRoutes/>
+      </BrowserRouter>     
     </div>
+    </LocalizationProvider>
   );
 }
 

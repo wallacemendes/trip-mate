@@ -1,0 +1,18 @@
+.header-ok{
+    background-color: #32BF84;
+    width: 100%;
+    padding: 1.5rem  3rem;   
+    margin-bottom: 2rem; 
+    cursor: pointer;
+  }
+
+  .header-ok img{
+    width: 25%;
+  }
+  
+  .header-ok h2 {
+    font-size: 2.6rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #FD4659;
+  }
