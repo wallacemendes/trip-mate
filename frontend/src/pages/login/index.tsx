@@ -33,7 +33,7 @@ const Login: React.FC = () => {
     setLoading(true)
     api.post('login', loginData).then(res => {
       localStorage.setItem('token', res.data.token)
-      localStorage.setItem('userName', res.data.user.name)
+      localStorage.setItem('userName', res.data.name)
       return navigate('/dashboard')
     }).catch(err => {
       toast.error("Não foi possível autenticar esse usuário")
