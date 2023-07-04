@@ -20,7 +20,7 @@ const Header: React.FC = () => {
     }, [])
 
     function navigateDashboard() {
-        return navigate('/dashboard')
+        return localStorage.getItem('userName') != null ? navigate('/dashboard') : navigate("/")
     }
 
     function handleClose(){
