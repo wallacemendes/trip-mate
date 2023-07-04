@@ -6,7 +6,9 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
-import {toast, Toaster} from 'react-hot-toast'
+import { toast, Toaster } from 'react-hot-toast';
+import Select from '@mui/joy/Select';
+import Option from '@mui/joy/Option';
 
 interface FormProps {
   title: string,
@@ -40,6 +42,7 @@ const NewTravel: React.FC = () => {
       startDate: new Date(formData.startDate).toISOString().slice(0, 10),
       endDate: new Date(formData.endDate).toISOString().slice(0, 10)
     }
+    console.log(form)
     api.post('trips', form).then((res) => {
       console.log(res.data);
       setLoading(false)
@@ -51,6 +54,13 @@ const NewTravel: React.FC = () => {
         toast.error("Não foi possível criar nova viagem")
       })
 
+  };
+
+  const handleChange = (
+    event: React.SyntheticEvent | null,
+    newValue: string | null,
+  ) => {
+    setFormData({ ...formData, currency: newValue! });
   };
 
 
@@ -101,13 +111,10 @@ const NewTravel: React.FC = () => {
             </div>
             <div>
               <label htmlFor="currency">Moeda Local</label>
-              <TextField
-                id="currency"
-                name="currency"
-                defaultValue={formData.currency}
-                onChange={(event) => setFormData({ ...formData, currency: event.target.value })}
-                required
-              />
+              <Select defaultValue={formData.currency} onChange={handleChange}>
+                <Option value="BRL">BRL</Option>
+                <Option value="USD">USD</Option>
+              </Select>
             </div>
             <div>
               <label htmlFor="budget">Orçamento</label>
