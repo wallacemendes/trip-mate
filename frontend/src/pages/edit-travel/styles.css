@@ -15,3 +15,10 @@
     text-align: center;
     color: #707070;
   }
+
+  .delete-trip-box{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+  }

@@ -3,13 +3,16 @@ import './styles.css'
 import Logo from '../../assets/clean_logo.png'
 import Header from '../../components/header/intex';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { CircularProgress, TextField } from '@mui/material';
+import { Box, CircularProgress, Modal, TextField } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../services/api';
 import dayjs from 'dayjs';
 import { toast, Toaster } from 'react-hot-toast';
 import Select from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
+import IconButton from '@mui/joy/IconButton';
+import Delete from '@mui/icons-material/Delete';
+import ModalDelete from '../../components/delete-trip';
 
 interface FormProps {
     title: string,
@@ -28,6 +31,7 @@ const EditTravel: React.FC = () => {
     const navigate = useNavigate()
 
     const [isLoading, setLoading] = useState<boolean>(true);
+    const [showModalDelete, setShowModal] = useState<boolean>(false);
 
     const [formData, setFormData] = useState<FormProps>({
         title: '',
@@ -37,6 +41,18 @@ const EditTravel: React.FC = () => {
         currency: '',
         budget: ''
     });
+
+    const styleModal = {
+        position: 'absolute' as 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 600,
+        bgcolor: 'background.paper',
+        border: '2px solid #000',
+        boxShadow: 24,
+        p: 4,
+    };
 
     useEffect(() => {
         setLoading(true)
@@ -80,6 +96,11 @@ const EditTravel: React.FC = () => {
         setFormData({ ...formData, currency: newValue! });
       };
 
+      function handleClose() {
+        setShowModal(false)
+    }
+      
+
     return (
         <div className='edit-travel'>
             <Header />
@@ -91,6 +112,9 @@ const EditTravel: React.FC = () => {
                 <h2>Editar viagem</h2>
                 {isLoading ? <div className="full-width flex-center"><CircularProgress /></div> : (
                     <div className='form-box form-container wider-trav form-shadow'>
+                        <div className='delete-trip-box'>
+                            <IconButton onClick={() => setShowModal(true)} color="danger" variant="outlined"><Delete/></IconButton>
+                        </div>
                         <form onSubmit={handleSubmit}>
                             <div>
                                 <label htmlFor="email">Título</label>
@@ -112,7 +136,7 @@ const EditTravel: React.FC = () => {
                             <div>
                                 <label htmlFor="endDate">Data de Volta</label>
                                 <DatePicker
-                                    defaultValue={dayjs(formData.startDate)}
+                                    defaultValue={dayjs(formData.endDate)}
                                     onChange={(event: any) => setFormData({ ...formData, endDate: `${event}` })}
                                 />
                             </div>
@@ -151,6 +175,16 @@ const EditTravel: React.FC = () => {
                 )}
 
             </div>
+            <Modal
+                open={showModalDelete}
+                onClose={() => handleClose()}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={styleModal}>
+                    <ModalDelete id={Number(id)} handleClose={() => handleClose()} />
+                </Box>
+            </Modal>
         </div>
     );
 };

@@ -1,0 +1,10 @@
+.modal-buttons{
+    display: flex;
+    justify-content: center;
+    gap:1rem;
+    padding-top: 3rem;
+}
+
+.modal-activity h3{
+    margin-top: 0;
+}
