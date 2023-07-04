@@ -14,16 +14,14 @@ class ActivityResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $totalCost = $this->expenses->sum('amount');
 
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'date' => $this->date,
-            'time' => $this->time,
+            'start' => $this->start,
+            'end' => $this->end,
             'description' => $this->description,
-            'cost' => $totalCost,
-            'budget' => $this->budget,
+            'cost' => $this->cost,
             'tripId' => $this->trip_id,
             'expenses' => ExpenseResource::collection($this->whenLoaded('expenses'))
         ];

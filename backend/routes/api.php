@@ -30,9 +30,11 @@ Route::middleware('auth:sanctum')->group(function () {
         'trips.activities' => ActivityController::class,
         'trips.activities.expenses' => ExpenseController::class,
     ]);
+    Route::get('trips/{trip}/activities/cost/{date}', [ActivityController::class, 'getActivitiesByDay']);
     Route::post('/sharing/invite', [SharedUserController::class, 'share']);
     Route::post('/sharing/accept-invite', [SharedUserController::class, 'acceptInvitation']);
     Route::delete('/sharing/delete-token', [SharedUserController::class, 'deleteShareToken']);
+    Route::post('/logout', [AuthController::class, 'logout']);
 });
 
 Route::post('/register', [AuthController::class, 'register']);

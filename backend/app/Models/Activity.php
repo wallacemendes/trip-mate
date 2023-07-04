@@ -11,10 +11,10 @@ class Activity extends Model
 
     protected $fillable = [
         'title',
-        'date',
-        'time',
+        'start',
+        'end',
         'description',
-        'budget',
+        'cost',
     ];
 
 

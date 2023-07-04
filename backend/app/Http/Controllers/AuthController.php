@@ -47,15 +47,22 @@ class AuthController extends Controller
             $token = $user->createToken('MySessionToken')->plainTextToken;
 
             return response()->json([
-                'name' => $user->,
-                'message' => 'Successfully logged in',
+                'message' => 'Logado com Sucesso',
+                'name' => $user->name,
                 'token' => $token,
             ]);
         }
 
         return response()->json([
-            'message' => 'Invalid email or password'
+            'message' => 'Email ou senha incorreta'
         ], 401);
+    }
+
+    public function logout(Request $request)
+    {
+       $request->user()->currentAccessToken()->delete();
+
+        return response()->json(['message' => 'Deslogado com sucesso']);
     }
 
 }

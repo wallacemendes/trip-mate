@@ -71,9 +71,9 @@ class TripController extends Controller
     public function destroy(Trip $trip)
     {
         if ($trip->user_id !== auth()->id()) {
-            return response()->json(['message' => 'Only owner user can delete a trip'], 403);
+            return response()->json(['message' => 'Não permitido: Apenas o dono pode deletar a viagem'], 403);
         }
         $trip->delete();
-        return response()->json(['message' => 'Trip deleted successfully']);
+        return response()->json(['message' => 'Viagem deletada com sucesso']);
     }
 }
