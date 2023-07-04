@@ -2,6 +2,10 @@
     margin-top: 1rem;
 }
 
+.modal-activity{
+    padding: 1rem;
+}
+
 .gap{
     display: flex;
    justify-content: space-between;
@@ -15,4 +19,7 @@
 }
 .expense-box p{
     color:#355993;
+}
+.padding-light {
+    padding: 2rem;
 }

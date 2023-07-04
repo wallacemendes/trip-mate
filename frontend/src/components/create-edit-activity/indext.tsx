@@ -25,18 +25,13 @@ const ModalActivity = (props: ModalProps): JSX.Element => {
         budget: '0'
     })
     const [isExpense, setExpense] = useState<boolean>(false)
-    const [formExpense, setFormExpense] = useState({
-        description: '',
-        amount: '0'
-    })
-
+ 
     useEffect(() => {
         if (props.id !== 0) {
             setLoading(true);
             api.get(`trips/${props.tripId}/activities/${props.id}`).then(res => {
                 setFormData({ ...res.data.data, time: res.data.data.time.slice(0, 5) })
                 setLoading(false)
-                setFormExpense(res.data.data.cost)
             })
                 .catch(err => {
                     console.log(err)
@@ -87,29 +82,6 @@ const ModalActivity = (props: ModalProps): JSX.Element => {
 
     };
 
-    function handleSubmitExpense() {
-        setLoading(true)
-        api.post(`trips/${props.tripId}/activities/${props.id}/expenses`, formExpense)
-            .then(res => {
-                console.log(res.data)
-                setExpense(false);
-                props.handleClose()
-                setLoading(false)
-
-            })
-            .catch(err => {
-                console.log(err)
-                setLoading(false)
-                toast.error("Não foi possível criar despesa")
-            })
-    }
-
-
-    function switchExpense() {
-        setExpense(true);
-    }
-
-
 
     return (
         <div className='modal-activity'>
@@ -119,16 +91,13 @@ const ModalActivity = (props: ModalProps): JSX.Element => {
             />
             {props.id === 0 ? <h2>Nova atividade</h2> : (
                 <div className='flex-center gap'>
-                    {!isExpense ? <h2>Editar atividade</h2> : <h2>Criar despesa</h2>}
+                    <h2>Editar atividade</h2> 
                     <div className='expense-box'>
                         <p>${formData.cost}</p>
-                        <Button onClick={switchExpense} aria-label="Like" variant="outlined">
-                            <PlusOne /> $
-                        </Button>
                     </div>
                 </div>
             )}
-            {isLoading ? <div className="full-width flex-center"><CircularProgress /></div> : !isExpense && (
+            {isLoading ? <div className="full-width flex-center padding-light"><CircularProgress /></div> : !isExpense && (
                 <div className='form-box form-container wider-trav'>
                     <form onSubmit={handleSubmit}>
                         <div>
@@ -175,36 +144,6 @@ const ModalActivity = (props: ModalProps): JSX.Element => {
                                 name="budget"
                                 defaultValue={formData.budget}
                                 onChange={(event) => setFormData({ ...formData, budget: event.target.value })}
-                                required
-                            />
-                        </div>
-                        <div className='button-box'>
-                            <button type="submit">Salvar</button>
-                        </div>
-                    </form>
-                </div>
-            )}
-            {!isLoading && isExpense && (
-                <div className='form-box form-container wider-trav'>
-                    <form onSubmit={handleSubmitExpense}>
-                        <div>
-                            <label htmlFor="description">Descrição</label>
-                            <TextField
-                                id="description"
-                                name="description"
-                                defaultValue={formExpense.description}
-                                onChange={(event) => setFormExpense({ ...formExpense, description: event.target.value })}
-                                required
-                            />
-                        </div>
-                        <div>
-                            <label htmlFor="amount">Despesa</label>
-                            <TextField
-                                id="amount"
-                                name="amount"
-                                defaultValue={formExpense.amount}
-                                onChange={(event) => setFormExpense({ ...formExpense, amount: event.target.value })}
-                                required
                             />
                         </div>
                         <div className='button-box'>

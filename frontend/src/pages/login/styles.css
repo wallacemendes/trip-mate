@@ -41,6 +41,7 @@
     width: 20rem;
     justify-content: space-between;
     min-height: 15rem;
+    background: white;
   }
 
   .no-account{

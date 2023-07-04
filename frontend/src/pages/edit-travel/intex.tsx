@@ -8,6 +8,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import api from '../../services/api';
 import dayjs from 'dayjs';
 import { toast, Toaster } from 'react-hot-toast';
+import Select from '@mui/joy/Select';
+import Option from '@mui/joy/Option';
 
 interface FormProps {
     title: string,
@@ -45,7 +47,8 @@ const EditTravel: React.FC = () => {
             setLoading(false)
         }).catch(err => {
             setLoading(false)
-            toast.error("Erro ao obter dados da viagem")})
+            toast.error("Erro ao obter dados da viagem")
+        })
     }, [id])
 
 
@@ -70,6 +73,13 @@ const EditTravel: React.FC = () => {
 
     };
 
+    const handleChange = (
+        event: React.SyntheticEvent | null,
+        newValue: string | null,
+      ) => {
+        setFormData({ ...formData, currency: newValue! });
+      };
+
     return (
         <div className='edit-travel'>
             <Header />
@@ -77,10 +87,10 @@ const EditTravel: React.FC = () => {
                 position="top-center"
                 reverseOrder={false}
             />
-            <div className='create-travel-box'>
+            <div className='create-travel-box '>
                 <h2>Editar viagem</h2>
                 {isLoading ? <div className="full-width flex-center"><CircularProgress /></div> : (
-                    <div className='form-box form-container wider-trav'>
+                    <div className='form-box form-container wider-trav form-shadow'>
                         <form onSubmit={handleSubmit}>
                             <div>
                                 <label htmlFor="email">Título</label>
@@ -118,13 +128,10 @@ const EditTravel: React.FC = () => {
                             </div>
                             <div>
                                 <label htmlFor="currency">Moeda Local</label>
-                                <TextField
-                                    id="currency"
-                                    name="currency"
-                                    defaultValue={formData.currency}
-                                    onChange={(event) => setFormData({ ...formData, currency: event.target.value })}
-                                    required
-                                />
+                                <Select defaultValue={formData.currency} onChange={handleChange}>
+                                    <Option value="BRL">BRL</Option>
+                                    <Option value="USD">USD</Option>
+                                </Select>
                             </div>
                             <div>
                                 <label htmlFor="budget">Orçamento</label>

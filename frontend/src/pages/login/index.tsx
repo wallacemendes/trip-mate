@@ -31,9 +31,12 @@ const Login: React.FC = () => {
     event.preventDefault();
     // Lógica para autenticação do usuário
     setLoading(true)
-    api.post('login', loginData).then(res => {
+    api.post('login', loginData)
+    .then(res => {
       localStorage.setItem('token', res.data.token)
       localStorage.setItem('userName', res.data.name)
+      const authToken = `Bearer ${res.data.token}`
+      api.defaults.headers.common = {'Authorization': `bearer ${authToken}`}
       return navigate('/dashboard')
     }).catch(err => {
       toast.error("Não foi possível autenticar esse usuário")
@@ -78,7 +81,7 @@ const Login: React.FC = () => {
               <div className='button-box'>
                 <button type="submit">Login</button>
               </div>
-              <div className="no-account">
+              <div onClick={() => navigate('cadastro')} className="no-account">
                 <p>Ainda não possui conta? Cadastre-se</p>
               </div>
             </form>
