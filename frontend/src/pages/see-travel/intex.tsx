@@ -22,7 +22,7 @@ const SeeTravel: React.FC = () => {
     const [isLoading, setLoading] = useState<boolean>(true)
     const [isOpenModal, setOpenModal] = useState<boolean>(false)
     const [selectedActivity, setSelected] = useState<number>(0)
-    const [allCost, setAllCost] = useState<any>()
+    const [allCost, setAllCost] = useState<any>(0)
     const [hasChangedScheduler, setHasChanged] = useState<number>(0)
     const [currentTrip, setTrip] = useState<any>({ budget: "00.00" })
 
