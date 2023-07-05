@@ -45,7 +45,7 @@ Frameworks:
   ```git clone https://github.com/wallacemendes/trip-mate.git```
 - Passo 02: Instale o Docker de acordo com seu Sistema operacional: (https://docs.docker.com/desktop/install/windows-install/)
 - Passo 02: Navegue até a pasta raiz do projeto e execute `docker-compose up --build -d`
-- Passo 03: Em seu navegador, acesse: http://localhost:8000 para visualizar o site
+- Passo 03: Em seu navegador, acesse: http://localhost:3000 para visualizar o site
 
 # 👥 Time
 - [Adriana Silva (Project Manager)](https://github.com/adriianasilva)
