@@ -440,11 +440,10 @@ Authorization: Bearer generated_token_here
   - Um array de objetos de atividade, onde cada objeto representa uma atividade associada à viagem. Cada objeto de atividade possui as seguintes propriedades:
     - `id` (inteiro): O ID da atividade.
     - `title` (string): O título da atividade.
-    - `date` (data): A data da atividade.
-    - `time` (hora): A hora da atividade.
+    - `start` (datetime): A data e hora da atividade.
+    - `end` (datetime): A data e hora do fim da atividade.
     - `description` (string): A descrição da atividade.
-    - `cost` (numérico): O custo total da atividade (soma das despesas).
-    - `budget` (numérico): O orçamento para a atividade.
+    - `cost` (numérico): O custo total da atividade.
     - `tripId` (inteiro): O ID da viagem associada à atividade.
     - `expenses` (array): Um array de objetos de despesa associados à atividade. Cada objeto de despesa possui as seguintes propriedades:
       - `id` (inteiro): O ID da despesa.
@@ -462,11 +461,10 @@ Authorization: Bearer generated_token_here
       {
         "id": 1,
         "title": "Dia na Praia",
-        "date": "2023-06-27",
-        "time": "10:00:00",
+        "start": "2023-07-04 12:00:00",
+        "end": "2023-07-04 16:00:00",
         "description": "Aproveite um dia relaxante na praia",
         "cost": 80,
-        "budget": 100,
         "tripId": 1,
         "expenses": [
           {
@@ -525,13 +523,12 @@ Authorization: Bearer generated_token_here
     ```json
     {
       "id": 1,
-      "title": "Dia na Praia",
-      "date": "2023-06-27",
-      "time": "10:00:00",
-      "description": "Aproveite um dia relaxante na praia",
-      "cost": 80,
-      "budget": 100,
-      "tripId": 1,
+        "title": "Dia na Praia",
+        "start": "2023-07-04 12:00:00",
+        "end": "2023-07-04 16:00:00",
+        "description": "Aproveite um dia relaxante na praia",
+        "cost": 80,
+        "tripId": 1,
       "expenses": [
         {
           "id": 1,
@@ -556,16 +553,16 @@ Authorization: Bearer generated_token_here
 - Descrição: Criar uma nova atividade para uma viagem.
 - Corpo da Solicitação:
   - `title` (obrigatório, string): O título da atividade.
-  - `date` (obrigatório, data): A data da atividade.
-  - `time` (data): A hora da atividade.
+  - `start` (obrigatório, datetime): A data e hora da atividade.
+  - `time` (obrigatório, datetime): A data e hora do fim da atividade.
   - `description` (string): A descrição da atividade.
   - `budget` (numérico): O orçamento para a atividade.
 - Corpo da Resposta:
   - O objeto da atividade criada com as seguintes propriedades:
     - `id` (inteiro): O ID da atividade.
     - `title` (string): O título da atividade.
-    - `date` (string): A data da atividade.
-    - `time` (string): A hora da atividade.
+    - `start` (datetime): A data e hora da atividade.
+    - `time` (datetime): A data e hora do fim da atividade.
     - `description` (string): A descrição da atividade.
     - `cost` (numérico): O custo total da atividade (soma das despesas).
     - `budget` (numérico): O orçamento para a atividade.
@@ -576,20 +573,20 @@ Authorization: Bearer generated_token_here
     POST /trips/1/activities
 
     {
-      "title": "Dia de Praia",
-      "date": "2023-07-05",
-      "time": "09:00",
-      "description": "Aproveite um dia na praia",
-      "budget": 200
+      "title": "Dia na Praia",
+      "start": "2023-07-04 12:00:00",
+      "end": "2023-07-04 16:00:00",
+      "description": "Aproveite um dia relaxante na praia",
+      "cost": 80,
     }
     ```
   - Resposta:
     ```json
     {
       "id": 1,
-      "title": "Dia de Praia",
-      "date": "2023-07-05",
-      "time": "09:00",
+      "title": "Dia na Praia",
+      "start": "2023-07-04 12:00:00",
+      "end": "2023-07-04 16:00:00",
       "description": "Aproveite um dia na praia",
       "cost": 0,
       "budget": 200,
