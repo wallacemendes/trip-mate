@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
 
     return (
         <div className='footer-ok'>
-            <p>© 2023 TripMape, Inc. All rights reserved</p>
+            <p>© 2023 TripMate, Inc. All rights reserved</p>
         </div>
     );
 };
