@@ -49,13 +49,12 @@ const SeeTravel: React.FC = () => {
             res.data.data.forEach((item: any) => cost += item.cost)
             setAllCost(cost)
             setActivities(res.data.data.map((item: any) => {
-                const date = new Date(`${item.date} ${item.time}`)
                 return {
                     event_id: item.id,
                     title: item.title,
-                    start: date,
-                    end: new Date(date.setHours(date.getHours() + 1)),
-                    color: new Date() > date ? '#f59042' : '#355993'
+                    start: new Date(`${item.start}`),
+                    end: new Date(`${item.end}`),
+                    color: new Date() > new Date(`${item.end}`) ? '#f59042' : '#355993'
                 }
             }))
             console.log(activities)

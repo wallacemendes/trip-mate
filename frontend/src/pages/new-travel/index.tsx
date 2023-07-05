@@ -80,6 +80,7 @@ const NewTravel: React.FC = () => {
               <TextField
                 id="title"
                 name="title"
+                placeholder='Viagem à Paris'
                 defaultValue={formData.title}
                 onChange={(event) => setFormData({ ...formData, title: event.target.value })}
                 required
@@ -103,6 +104,7 @@ const NewTravel: React.FC = () => {
               <label htmlFor="location">Localização</label>
               <TextField
                 id="location"
+                placeholder='Paris'
                 name="location"
                 defaultValue={formData.location}
                 onChange={(event) => setFormData({ ...formData, location: event.target.value })}
@@ -114,6 +116,7 @@ const NewTravel: React.FC = () => {
               <Select defaultValue={formData.currency} onChange={handleChange}>
                 <Option value="BRL">BRL</Option>
                 <Option value="USD">USD</Option>
+                <Option value="EUR">EUR</Option>
               </Select>
             </div>
             <div>
@@ -121,6 +124,7 @@ const NewTravel: React.FC = () => {
               <TextField
                 id="budget"
                 name="budget"
+                placeholder='5000.00'
                 defaultValue={formData.budget}
                 onChange={(event) => setFormData({ ...formData, budget: event.target.value })}
                 required

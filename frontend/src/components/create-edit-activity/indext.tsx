@@ -3,7 +3,7 @@ import './styles.css'
 import Logo from '../../assets/clean_logo.png'
 import api from '../../services/api';
 import { Button, CircularProgress, TextField } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
+import { DatePicker, DateTimePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import { PlusOne } from '@mui/icons-material';
 import { toast, Toaster } from 'react-hot-toast';
@@ -19,18 +19,18 @@ const ModalActivity = (props: ModalProps): JSX.Element => {
     const [isLoading, setLoading] = useState<boolean>(false)
     const [formData, setFormData] = useState<any>({
         title: '',
-        date: '',
-        time: '',
+        start: '',
+        end: '',
         description: '',
-        budget: '0'
+        cost: '0'
     })
     const [isExpense, setExpense] = useState<boolean>(false)
- 
+
     useEffect(() => {
         if (props.id !== 0) {
             setLoading(true);
             api.get(`trips/${props.tripId}/activities/${props.id}`).then(res => {
-                setFormData({ ...res.data.data, time: res.data.data.time.slice(0, 5) })
+                setFormData({ ...res.data.data })
                 setLoading(false)
             })
                 .catch(err => {
@@ -41,15 +41,24 @@ const ModalActivity = (props: ModalProps): JSX.Element => {
         }
     }, [props.id, props.tripId])
 
+    function formatDate(date: Date) {
+        date.setHours(date.getHours() -3);
+        const formated = date.toISOString().split("T").join(" ").slice(0, 16)
+        return formated
+    }
+
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
+        const startDate = formatDate(new Date(formData.start))
+        const endDate = formatDate(new Date(formData.end))
+        console.log(endDate, startDate)
 
         const form = {
             title: formData.title,
-            date: new Date(formData.date).toISOString().slice(0, 10),
-            time: formData.time,
+            start: startDate,
+            end: endDate,
             description: formData.description,
-            budget: formData.budget,
+            cost: Number(formData.cost),
         }
         console.log(form)
         setLoading(true)
@@ -91,7 +100,7 @@ const ModalActivity = (props: ModalProps): JSX.Element => {
             />
             {props.id === 0 ? <h2>Nova atividade</h2> : (
                 <div className='flex-center gap'>
-                    <h2>Editar atividade</h2> 
+                    <h2>Editar atividade</h2>
                     <div className='expense-box'>
                         <p>${formData.cost}</p>
                     </div>
@@ -105,26 +114,24 @@ const ModalActivity = (props: ModalProps): JSX.Element => {
                             <TextField
                                 id="title"
                                 name="title"
+                                placeholder='Passeio turístico'
                                 defaultValue={formData.title}
                                 onChange={(event) => setFormData({ ...formData, title: event.target.value })}
                                 required
                             />
                         </div>
                         <div>
-                            <label htmlFor="startDate">Data</label>
-                            <DatePicker
-                                defaultValue={dayjs(formData.date)}
-                                onChange={(event: any) => setFormData({ ...formData, date: `${event}` })}
+                            <label htmlFor="startDate">Início</label>
+                            <DateTimePicker
+                                defaultValue={dayjs(formData.start)}
+                                onChange={(event: any) => setFormData({ ...formData, start: `${event}` })}
                             />
                         </div>
                         <div>
-                            <label htmlFor="hora">Hora</label>
-                            <TextField
-                                id="hora"
-                                name="hora"
-                                defaultValue={formData.time}
-                                onChange={(event) => setFormData({ ...formData, time: event.target.value })}
-                                required
+                            <label htmlFor="startDate">Fim</label>
+                            <DateTimePicker
+                                defaultValue={dayjs(formData.end)}
+                                onChange={(event: any) => setFormData({ ...formData, end: `${event}` })}
                             />
                         </div>
                         <div>
@@ -132,18 +139,20 @@ const ModalActivity = (props: ModalProps): JSX.Element => {
                             <TextField
                                 id="description"
                                 name="description"
+                                placeholder='Passeio rápido pelo centro...'
                                 defaultValue={formData.description}
                                 onChange={(event) => setFormData({ ...formData, description: event.target.value })}
                                 required
                             />
                         </div>
                         <div>
-                            <label htmlFor="budget">Orçamento</label>
+                            <label htmlFor="budget">Custo</label>
                             <TextField
                                 id="budget"
                                 name="budget"
-                                defaultValue={formData.budget}
-                                onChange={(event) => setFormData({ ...formData, budget: event.target.value })}
+                                placeholder='50.00'
+                                defaultValue={formData.cost}
+                                onChange={(event) => setFormData({ ...formData, cost: event.target.value })}
                             />
                         </div>
                         <div className='button-box'>

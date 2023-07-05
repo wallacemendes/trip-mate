@@ -7,4 +7,5 @@ const api = axios.create({
 const authToken = `Bearer ${localStorage.getItem('token')}`
 api.defaults.headers.common = {'Authorization': `bearer ${authToken}`}
 
+
 export default api;
