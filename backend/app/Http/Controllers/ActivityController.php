@@ -8,6 +8,7 @@ use App\Models\Activity;
 use App\Models\Trip;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
 
 class ActivityController extends Controller
@@ -96,11 +97,22 @@ class ActivityController extends Controller
         return response()->json(['message' => 'Atividade deletada com sucesso']);
     }
 
-    public function getActivitiesByDay(Trip $trip, $date){
+    public function getActivitiesSumByDate(Trip $trip, $date){
         $activities = Activity::where( 'trip_id', $trip->id)->whereDate('start', $date)->get();
         $totalCost = $activities->sum('cost');
 
         return response()->json(['dayCost' => $totalCost ?? 0]);
+    }
+
+    public function getActivitySumByTrip(Trip $trip)
+    {
+        $activitiesByDate = Activity::select(DB::raw('DATE(start) AS date'), DB::raw('SUM(cost) AS sum'))
+            ->where('trip_id', $trip->id)
+            ->groupBy(DB::raw('DATE(start)'))
+            ->get()
+            ->pluck('sum', 'date');
+
+        return response()->json($activitiesByDate);
     }
 
     public function checkValidation(Request $request, string $string = ''){
