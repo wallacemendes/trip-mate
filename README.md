@@ -43,13 +43,24 @@ Frameworks:
 - Passo 01: Abra o prompt de comando/terminal e execute o seguinte comando:
   
   ```git clone https://github.com/wallacemendes/trip-mate.git```
-- Passo 02: Instale o Docker de acordo com seu Sistema operacional: (https://docs.docker.com/desktop/install/windows-install/)
-- Passo 02: Navegue até a pasta raiz do projeto e execute `docker-compose up --build -d`
-- Passo 03: Em seu navegador, acesse: http://localhost:3000 para visualizar o site
+- Passo 02: Instale o Docker de acordo com seu Sistema operacional: (https://www.docker.com/products/docker-desktop/)
+- Passo 03: Instale o Node.js na sua máquina (https://nodejs.org/pt-br/download/current)
+- Passo 04: Navegue até a pasta frontend do projeto `/.../trip-mate/frontend/` e rode o comando `npm install` (caso dê algum erro rode `npm install --force`)
+- Passo 05: Com o Docker Desktop já aberto depois de instalado, navegue até a pasta raiz do projeto `/.../trip-mate/` e execute `docker-compose up --build -d`
+- Passo 06: Após os 3 containers estiverem rodando, execute no terminal os seguintes comandos:
+  
+  ```docker exec -it api sh```  para abrir o terminal do container da api
+
+  ```php artisan migrate``` para criar a estrutura do banco de dados
+
+- Passo 07: Se todos os passos deram certo, em seu navegador, acesse: http://localhost:3000 para visualizar o site
 
 # 👥 Time
 - [Adriana Silva (Project Manager)](https://github.com/adriianasilva)
 - [Murilo Vicente (Desenvolvedor Front-end)](https://github.com/MuriloVi)
 - [Wallace Mendes (Desenvolvedor Back-end)](https://github.com/wallacemendes)
 
+
 Projeto criado para a Disciplina de Engenharia de Software II no semestre 2023.2 da Universidade Federal da Bahia, criado por Adriana Silva, Murilo Vicente e Wallace Mendes 
+
+#### [Acessar Documentação da API](https://github.com/wallacemendes/trip-mate/blob/main/backend/README.md)
