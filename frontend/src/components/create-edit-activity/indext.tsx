@@ -24,7 +24,6 @@ const ModalActivity = (props: ModalProps): JSX.Element => {
         description: '',
         cost: ''
     })
-    const [isExpense, setExpense] = useState<boolean>(false)
 
     useEffect(() => {
         if (props.id !== 0) {
@@ -106,7 +105,7 @@ const ModalActivity = (props: ModalProps): JSX.Element => {
                     </div>
                 </div>
             )}
-            {isLoading ? <div className="full-width flex-center padding-light"><CircularProgress /></div> : !isExpense && (
+            {isLoading ? <div className="full-width flex-center padding-light"><CircularProgress /></div> : (
                 <div className='form-box form-container wider-trav'>
                     <form onSubmit={handleSubmit}>
                         <div>

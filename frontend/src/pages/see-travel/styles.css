@@ -28,6 +28,10 @@
     color: darkred;
   }
 
+  .mg-bottom{
+    margin-bottom: 1rem;
+  }
+
   .travel-board{
     width: 95vw;
   }

@@ -3,15 +3,22 @@ import './styles.css'
 import Header from '../../components/header/intex';
 import api from '../../services/api';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Box, Button, CircularProgress, Modal } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, CircularProgress, Modal, Paper, Typography } from '@mui/material';
 import { Scheduler } from '@aldabil/react-scheduler';
 import { ptBR } from 'date-fns/locale';
 import ModalActivity from '../../components/create-edit-activity/indext';
 import { toast, Toaster } from 'react-hot-toast';
 import type {
-    ProcessedEvent,
     SchedulerHelpers
 } from "@aldabil/react-scheduler/types";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import dayjs from 'dayjs';
 
 
 type currencyType = "BRL" | "USD" | "EUR"
@@ -29,6 +36,7 @@ const SeeTravel: React.FC = () => {
     const [hasChangedScheduler, setHasChanged] = useState<number>(0)
     const [currentTrip, setTrip] = useState<any>({ budget: "00.00" })
     const [currency, setCurrency] = useState<any>("R$")
+    const [expenses, setExpenses] = useState<any>([])
 
 
     const { id } = useParams()
@@ -87,6 +95,21 @@ const SeeTravel: React.FC = () => {
             setTrip({ budget: "00.00" })
             setLoading(false)
         })
+        api.get(`trips/${id}/cost`)
+            .then(response => {
+                console.log(response.data)
+                const formatedExpenses = Object.keys(response.data).map(function (key, index) {
+                    return {
+                        expense: response.data[key],
+                        date: key
+                    }
+                });
+                console.log(formatedExpenses)
+                setExpenses(formatedExpenses)
+                setLoading(false)
+            }).catch((error) => {
+                console.log(error)
+            })
     }, [id])
 
     function navigateNewTravel() {
@@ -115,6 +138,13 @@ const SeeTravel: React.FC = () => {
         return Number(currentTrip.budget) - allCost > 0 ? 'cost-fine' : 'cost-bad';
     }
 
+    function formatDate(date: string){
+        if(date != null){
+            return dayjs(date).format('DD/MM/YYYY');
+        }
+        return '';
+    }
+
     return (
         <div className='see-travel'>
             <Header />
@@ -127,21 +157,56 @@ const SeeTravel: React.FC = () => {
                     <h2>Atividades da viagem</h2>
                 </div>
                 <div>
-                    <div className='button-box'>
+                    <div className='button-box mg-bottom'>
                         <Button onClick={navigateNewTravel} variant="outlined">Editar viagem</Button>
                         <Button onClick={openModalNewActivity} variant="outlined">Criar atividade</Button>
                     </div>
                     {!isLoading && (
-                        <div className='flex-gap'>
-                            <h3>Despesa total:</h3>
-                            <h3>{currency}{allCost}</h3>
-                        </div>
-                    )}
-                    {currentTrip.budget !== "00.00" && !isLoading && (
-                        <div className='flex-gap'>
-                            <h3>Orçamento restante:</h3>
-                            <h3 className={getClassBasedOnNumber()}>{currency}{Number(currentTrip.budget) - allCost}</h3>
-                        </div>
+                        <Accordion>
+                            <AccordionSummary
+                                expandIcon={<ExpandMoreIcon />}
+                                aria-controls="panel1a-content"
+                                id="panel1a-header"
+                            >
+                                <Typography>Exibir relação de gastos</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
+                                <div className='flex-gap'>
+                                    <h4>Despesa total:</h4>
+                                    <h4>{currency}{allCost}</h4>
+                                </div>
+                                {currentTrip.budget !== "00.00" && (
+                                    <div className='flex-gap mg-bottom'>
+                                        <h4>Orçamento restante:</h4>
+                                        <h4 className={getClassBasedOnNumber()}>{currency}{Number(currentTrip.budget) - allCost}</h4>
+                                    </div>
+                                )}
+                                <TableContainer component={Paper}>
+                                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell align="center">Dia</TableCell>
+                                                <TableCell align="right">Gasto</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {expenses.map((row: any) => (
+                                                <TableRow
+                                                    key={row.date}
+                                                >
+                                                    <TableCell component="th" scope="row">
+                                                        {formatDate(row.date)}
+                                                    </TableCell>
+                                                    <TableCell align="right">
+                                                        {currency}{row.expense}
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                            </AccordionDetails>
+                        </Accordion>
                     )}
 
                 </div>
@@ -155,7 +220,7 @@ const SeeTravel: React.FC = () => {
                                 weekStartOn: 0,
                                 startHour: 7,
                                 endHour: 24,
-                                step: 60
+                                step: 60,
                             }}
                             selectedDate={new Date(activities[0].start)}
                             view="week"
