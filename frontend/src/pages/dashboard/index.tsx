@@ -27,7 +27,7 @@ const Dashboard: React.FC = () => {
             console.log(err);
             setTrips([]);
             setIsLoading(false);
-            toast.error("Ocorreu um erro ao buscar viagems")
+            toast.error("Ocorreu um erro ao buscar viagens")
         })
     }, [])
 

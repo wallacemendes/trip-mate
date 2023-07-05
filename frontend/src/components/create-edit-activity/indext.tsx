@@ -22,7 +22,7 @@ const ModalActivity = (props: ModalProps): JSX.Element => {
         start: '',
         end: '',
         description: '',
-        cost: '0'
+        cost: ''
     })
     const [isExpense, setExpense] = useState<boolean>(false)
 

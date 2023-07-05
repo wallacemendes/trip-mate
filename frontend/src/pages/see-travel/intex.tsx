@@ -14,6 +14,9 @@ import type {
 } from "@aldabil/react-scheduler/types";
 
 
+type currencyType = "BRL" | "USD" | "EUR"
+
+
 const SeeTravel: React.FC = () => {
 
     const navigate = useNavigate()
@@ -25,6 +28,7 @@ const SeeTravel: React.FC = () => {
     const [allCost, setAllCost] = useState<any>(0)
     const [hasChangedScheduler, setHasChanged] = useState<number>(0)
     const [currentTrip, setTrip] = useState<any>({ budget: "00.00" })
+    const [currency, setCurrency] = useState<any>("R$")
 
 
     const { id } = useParams()
@@ -67,9 +71,18 @@ const SeeTravel: React.FC = () => {
         //despesas
     }, [id, isOpenModal, hasChangedScheduler])
 
+    const currencyDictionary = {
+        "BRL": "R$",
+        "USD": "$",
+        "EUR": "€"
+    }
+
     useEffect(() => {
+        setLoading(true)
         api.get(`/trips/${id}`).then(res => {
             setTrip(res.data.data)
+            setCurrency(currencyDictionary[res.data.data.currency as currencyType])
+            setLoading(false)
         }).catch(err => {
             setTrip({ budget: "00.00" })
             setLoading(false)
@@ -118,14 +131,16 @@ const SeeTravel: React.FC = () => {
                         <Button onClick={navigateNewTravel} variant="outlined">Editar viagem</Button>
                         <Button onClick={openModalNewActivity} variant="outlined">Criar atividade</Button>
                     </div>
-                    <div className='flex-gap'>
-                        <h3>Despesa total:</h3>
-                        <h3>${allCost}</h3>
-                    </div>
-                    {currentTrip.budget !== "00.00" && (
+                    {!isLoading && (
+                        <div className='flex-gap'>
+                            <h3>Despesa total:</h3>
+                            <h3>{currency}{allCost}</h3>
+                        </div>
+                    )}
+                    {currentTrip.budget !== "00.00" && !isLoading && (
                         <div className='flex-gap'>
                             <h3>Orçamento restante:</h3>
-                            <h3 className={getClassBasedOnNumber()}>${Number(currentTrip.budget) - allCost}</h3>
+                            <h3 className={getClassBasedOnNumber()}>{currency}{Number(currentTrip.budget) - allCost}</h3>
                         </div>
                     )}
 

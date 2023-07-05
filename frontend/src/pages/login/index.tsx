@@ -32,15 +32,18 @@ const Login: React.FC = () => {
     // Lógica para autenticação do usuário
     setLoading(true)
     api.post('login', loginData)
-    .then(res => {
-      localStorage.setItem('token', res.data.token)
-      localStorage.setItem('userName', res.data.name)
-      const authToken = `Bearer ${res.data.token}`
-      api.defaults.headers.common = {'Authorization': `bearer ${authToken}`}
-      return navigate('/dashboard')
-    }).catch(err => {
+    .then((response) => {
+       if(response.status === 200){
+        localStorage.setItem('token', response.data.token)
+        localStorage.setItem('userName', response.data.name)
+        const authToken = `Bearer ${response.data.token}`
+        api.defaults.headers.common = {'Authorization': `bearer ${authToken}`}
+        return navigate('/dashboard')
+       }
+       throw new Error('Erro')
+    }).catch((error) => {
       toast.error("Não foi possível autenticar esse usuário")
-      console.log(err);
+      console.log(error);
       setLoading(false);
     })
   };

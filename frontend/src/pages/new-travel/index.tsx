@@ -39,6 +39,7 @@ const NewTravel: React.FC = () => {
     setLoading(true)
     const form = {
       ...formData,
+      budget: Number(formData.budget),
       startDate: new Date(formData.startDate).toISOString().slice(0, 10),
       endDate: new Date(formData.endDate).toISOString().slice(0, 10)
     }
