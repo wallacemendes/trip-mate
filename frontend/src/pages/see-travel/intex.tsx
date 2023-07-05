@@ -46,7 +46,7 @@ const SeeTravel: React.FC = () => {
         api.get(`/trips/${id}/activities`).then(res => {
             console.log(res.data.data)
             let cost = 0;
-            res.data.data.forEach((item: any) => cost += item.cost)
+            res.data.data.forEach((item: any) => cost += Number(item.cost))
             setAllCost(cost)
             setActivities(res.data.data.map((item: any) => {
                 return {
@@ -136,8 +136,8 @@ const SeeTravel: React.FC = () => {
                             disableViewNavigator
                             locale={ptBR}
                             week={{
-                                weekDays: [0, 1, 2, 3, 4, 5],
-                                weekStartOn: 6,
+                                weekDays: [0, 1, 2, 3, 4, 5, 6],
+                                weekStartOn: 0,
                                 startHour: 7,
                                 endHour: 24,
                                 step: 60
