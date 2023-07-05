@@ -40,7 +40,7 @@ Frameworks:
 - Back-end: Laravel 10.1
 
 # 🚀 Como rodar o projeto:
-- Passo 01 Abra o prompt de comando/terminal e execute o seguinte comando:
+- Passo 01: Abra o prompt de comando/terminal e execute o seguinte comando:
   
   ```git clone https://github.com/wallacemendes/trip-mate.git```
 - Passo 02: Instale o Docker de acordo com seu Sistema operacional: (https://docs.docker.com/desktop/install/windows-install/)
