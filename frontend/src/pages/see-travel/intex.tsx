@@ -145,6 +145,7 @@ const SeeTravel: React.FC = () => {
                             }}
                             selectedDate={new Date(activities[0].start)}
                             view="week"
+                            hourFormat='24'
                             events={activities}
                             editable={false}
                             deletable={false}
