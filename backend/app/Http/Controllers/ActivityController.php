@@ -8,6 +8,8 @@ use App\Models\Activity;
 use App\Models\Trip;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class ActivityController extends Controller
 {
@@ -21,8 +23,12 @@ class ActivityController extends Controller
         }
         if ($request->has('include')) {
             $includedData = $request->input('include');
-            if (str_contains($includedData, 'expenses')) {
-                $trip->load('activities.expenses');
+            if (str_contains($includedData, 'epoch')) {
+                $trip->activities->transform(function ($activity){
+                   $activity->start = strtotime($activity->start);
+                   $activity->end = strtotime($activity->end);
+                   return $activity;
+                });
             }
         }
 
@@ -34,20 +40,14 @@ class ActivityController extends Controller
      */
     public function store(Trip $trip, Request $request)
     {
-        $inputValidation = $request->validate([
-            'title' => 'required|string|max:255',
-            'date' => 'required|date',
-            'time' => 'date_format:H:i',
-            'description' => 'string',
-            'budget' => 'numeric',
-        ]);
+        $inputValidation = $this->checkValidation($request,'required');
 
         $activity = $trip->activities()->create([
             'title' => $inputValidation['title'],
-            'date' => $inputValidation['date'],
-            'time' => optional($inputValidation)['time'],
+            'start' => $inputValidation['start'],
+            'end' => $inputValidation['end'],
             'description' => optional($inputValidation)['description'],
-            'budget' => optional($inputValidation)['budget'],
+            'cost' => optional($inputValidation)['cost'],
         ]);
 
         return response()->json($activity, 201);
@@ -59,7 +59,7 @@ class ActivityController extends Controller
     public function show(Trip $trip, Activity $activity)
     {
         if ($activity->trip_id !== $trip->id) {
-            return response()->json(['message' => 'Activity not found for the specified trip'], 404);
+            return response()->json(['message' => 'Atividade não encontrada para a viagem especificada'], 404);
         }
 
         $activity->load('expenses');
@@ -74,26 +74,14 @@ class ActivityController extends Controller
         $method = $request->input('_method');
 
         if ($method === 'PUT') {
-            $inputValidation = $request->validate([
-                'title' => 'required|string|max:255',
-                'date' => 'required|date',
-                'time' => 'date_format:H:i',
-                'description' => 'string',
-                'budget' => 'numeric',
-            ]);
+            $inputValidation = $this->checkValidation($request, 'required');
         } else {
-            $inputValidation = $request->validate([
-                'title' => 'sometimes|string|max:255',
-                'date' => 'sometimes|date',
-                'time' => 'sometimes|nullable|date_format:H:i',
-                'description' => 'sometimes|nullable|string',
-                'budget' => 'sometimes|nullable|numeric',
-            ]);
+            $inputValidation = $this->checkValidation($request);
         }
 
         $activity->update($inputValidation);
 
-        return response()->json(['message' => 'Activity updated successfully']);
+        return response()->json(['message' => 'Atividade atualizada com sucesso']);
     }
 
     /**
@@ -102,10 +90,51 @@ class ActivityController extends Controller
     public function destroy(Trip $trip, Activity $activity)
     {
         if ($activity->trip_id !== $trip->id) {
-            return response()->json(['message' => 'Activity not found for the specified trip'], 404);
+            return response()->json(['message' => 'Atividade não encontrada para a viagem especificada'], 404);
         }
 
         $activity->delete();
-        return response()->json(['message' => 'Activity deleted successfully']);
+        return response()->json(['message' => 'Atividade deletada com sucesso']);
+    }
+
+    public function getActivitiesSumByDate(Trip $trip, $date){
+        $activities = Activity::where( 'trip_id', $trip->id)->whereDate('start', $date)->get();
+        $totalCost = $activities->sum('cost');
+
+        return response()->json(['dayCost' => $totalCost ?? 0]);
+    }
+
+    public function getActivitySumByTrip(Trip $trip)
+    {
+        $activitiesByDate = Activity::select(DB::raw('DATE(start) AS date'), DB::raw('SUM(cost) AS sum'))
+            ->where('trip_id', $trip->id)
+            ->groupBy(DB::raw('DATE(start)'))
+            ->get()
+            ->pluck('sum', 'date');
+
+        return response()->json($activitiesByDate);
+    }
+
+    public function checkValidation(Request $request, string $string = ''){
+
+        if($string === 'required'){
+            return $request->validate([
+                'title' => 'required|string|max:255',
+                'start' => ['required', 'date_format:Y-m-d H:i'],
+                'end' => ['required', 'date_format:Y-m-d H:i', 'after:start'],
+                'description' => 'string',
+                'cost' => 'numeric',
+            ]);
+        }else{
+            return $request->validate([
+                'title' => 'sometimes|string|max:255',
+                'start' => ['sometimes', 'date_format:Y-m-d H:i'],
+                'end' => ['sometimes', 'date_format:Y-m-d H:i', 'after:start'],
+                'description' => 'string',
+                'cost' => 'numeric',
+            ]);
+        }
+
     }
 }
+

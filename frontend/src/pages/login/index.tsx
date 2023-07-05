@@ -5,6 +5,7 @@ import Header from '../../components/header/intex';
 import Footer from '../../components/footer/intex';
 import { Route, Router, redirect, useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
+import {toast, Toaster} from 'react-hot-toast'
 
 interface LoginProps {
   email: string;
@@ -30,16 +31,30 @@ const Login: React.FC = () => {
     event.preventDefault();
     // Lógica para autenticação do usuário
     setLoading(true)
-    api.post('login', loginData).then(res => {
-      console.log('FEZ LOGIN')
-      localStorage.setItem('token', res.data.token)
-      return navigate('/dashboard')
-    }).catch(err => console.log(err))
+    api.post('login', loginData)
+    .then((response) => {
+       if(response.status === 200){
+        localStorage.setItem('token', response.data.token)
+        localStorage.setItem('userName', response.data.name)
+        const authToken = `Bearer ${response.data.token}`
+        api.defaults.headers.common = {'Authorization': `bearer ${authToken}`}
+        return navigate('/dashboard')
+       }
+       throw new Error('Erro')
+    }).catch((error) => {
+      toast.error("Não foi possível autenticar esse usuário")
+      console.log(error);
+      setLoading(false);
+    })
   };
 
   return (
     <div className='form-box full-width full-height'>
       <Header />
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
       {isLoading ? <div className='form-box full-width full-height'><div className="full-width flex-center"><CircularProgress /></div></div> : (
         <div className='form-box full-width full-height'>
           <div className='form-box form-container'>
@@ -68,6 +83,9 @@ const Login: React.FC = () => {
               </div>
               <div className='button-box'>
                 <button type="submit">Login</button>
+              </div>
+              <div onClick={() => navigate('cadastro')} className="no-account">
+                <p>Ainda não possui conta? Cadastre-se</p>
               </div>
             </form>
           </div>

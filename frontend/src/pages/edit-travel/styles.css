@@ -1,6 +1,6 @@
 .header-ok{
-    background-color: #32BF84;
-    width: 100%;
+    background-color: #355993;
+    ;
     padding: 1.5rem  3rem;   
     margin-bottom: 2rem; 
   }
@@ -13,5 +13,12 @@
     font-size: 2.6rem;
     margin-bottom: 20px;
     text-align: center;
-    color: #FD4659;
+    color: #707070;
+  }
+
+  .delete-trip-box{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
   }

@@ -22,7 +22,7 @@ class SharedUserController extends Controller
         $trip = Trip::findOrFail($request->input('trip_id'));
 
         if ($trip->user_id !== auth()->id()) {
-            return response()->json(['error' => 'Forbidden: Trip does not belong to this user'], 403);
+            return response()->json(['message' => 'Não permitido: Viagem não pertence a este usuário'], 403);
         }
 
         if ($trip->share_token) {
@@ -45,7 +45,7 @@ class SharedUserController extends Controller
         $trip = Trip::where('share_token', $request->input('token'))->first();
 
         if ($trip->user_id == auth()->id()) {
-            return response()->json(['error' => 'Forbidden: Owner cannot accept invite from its own trip'], 403);
+            return response()->json(['message' => 'Não permitido: O dono da viagem não pode aceitar seu próprio convite'], 403);
         }
 
         $sharedUser = SharedUser::firstOrNew([
@@ -55,9 +55,9 @@ class SharedUserController extends Controller
 
         if (!$sharedUser->exists) {
             $sharedUser->save();
-            $message = 'Invitation accepted.';
+            $message = 'Convite aceito';
         } else {
-            $message = 'Trip already shared with this user.';
+            $message = 'Viagem já compartilhada com este usuário';
         }
 
         return response()->json(['message' => $message]);
@@ -72,7 +72,7 @@ class SharedUserController extends Controller
         $trip = Trip::findOrFail($request->input('trip_id'));
 
         if ($trip->user_id !== auth()->id()) {
-            return response()->json(['error' => 'Forbidden: Trip does not belong to this user'], 403);
+            return response()->json(['message' => 'Não permitido: Viagem não pertence a este usuário'], 403);
         }
 
         $trip->update(['share_token' => null]);

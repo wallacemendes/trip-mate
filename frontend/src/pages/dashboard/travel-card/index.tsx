@@ -31,7 +31,7 @@ const TravelCard = (travel: CardProps): JSX.Element  => {
     
 
     return (
-        <div onClick={navigateToTravel} className='travel-card'>
+        <div onClick={navigateToTravel} className='travel-card form-shadow'>
             <h3>{travel.title}</h3>
             <p>Local: {travel.location}</p>
             <p>Ida :{formatDate(travel.startDate)}</p>
